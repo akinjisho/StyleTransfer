@@ -27,7 +27,7 @@ def main():
 
 def loadImg():
     content_image_url = st.text_input('Content Image URL', 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Golden_Gate_Bridge_from_Battery_Spencer.jpg/640px-Golden_Gate_Bridge_from_Battery_Spencer.jpg')
-    content_image_url = st.text_input('Content Image URL', 'https://upload.wikimedia.org/wikipedia/commons/0/0a/The_Great_Wave_off_Kanagawa.jpg')
+    style_image_url = st.text_input('Content Image URL', 'https://upload.wikimedia.org/wikipedia/commons/0/0a/The_Great_Wave_off_Kanagawa.jpg')
     output_image_size = 384
     # The content image size can be arbitrary.
     content_img_size = (output_image_size, output_image_size)
