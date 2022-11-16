@@ -22,10 +22,8 @@ def main():
 
     st.write(font_css, unsafe_allow_html=True)
 
-    tabs = st.tabs(('Style Transfer'))
-
-    with tabs[0]:
-        stleTransfer()
+    
+    stleTransfer()
 
 def loadImg():
     content_image_url = st.text_input('Content Image URL', 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Golden_Gate_Bridge_from_Battery_Spencer.jpg/640px-Golden_Gate_Bridge_from_Battery_Spencer.jpg')
