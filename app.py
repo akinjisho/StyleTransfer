@@ -6,7 +6,6 @@ import numpy as np
 import streamlit as st
 import requests
 import os
-from tensorflow.keras.utils import load_image
 # Home UI 
 
 def main():
