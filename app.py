@@ -37,8 +37,8 @@ def loadImg():
     # well but will lead to different results).
     style_img_size = (256, 256)  # Recommended to keep it at 256.
 
-    content_image = image.load_image(content_image_url, content_img_size)
-    style_image = image.load_image(style_image_url, style_img_size)
+    content_image = image.load_img(content_image_url, content_img_size)
+    style_image = image.load_img(style_image_url, style_img_size)
     
     style_image = tf.nn.avg_pool(style_image, ksize=[3,3], strides=[1,1], padding='SAME')
 
