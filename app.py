@@ -6,6 +6,7 @@ import numpy as np
 import streamlit as st
 import requests
 import os
+import tensorflow as tf
 # Home UI 
 
 def main():
@@ -36,8 +37,10 @@ def loadImg():
     # well but will lead to different results).
     style_img_size = (256, 256)  # Recommended to keep it at 256.
 
-    content_image = load_image(content_image_url, content_img_size)
-    style_image = load_image(style_image_url, style_img_size)
+    #content_image = load_image(content_image_url, content_img_size)
+    #style_image = load_image(style_image_url, style_img_size)
+    content_image = Image.open(content_image_url)
+    style_image = Image.open(style_image_url)
     style_image = tf.nn.avg_pool(style_image, ksize=[3,3], strides=[1,1], padding='SAME')
 
     return (content_image,style_image)
