@@ -86,9 +86,9 @@ def stleTransfer():
     hub_module = hub.load(hub_handle)
 
     
-    outputs = hub_module(tf.constant(content_image), tf.constant(style_image))
+    output = hub_module(tf.constant(content_image), tf.constant(style_image))
 
-    st.image(stylized_image)
+    st.image(output)
 
 
 if __name__ == "__main__":
