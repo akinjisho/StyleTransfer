@@ -41,6 +41,16 @@ def load_image(image_url, image_size=(256, 256), preserve_aspect_ratio=True): #2
   img = tf.image.resize(img, image_size, preserve_aspect_ratio=True)
   return img
 
+def crop_center(image):
+  """Returns a cropped square image."""
+  shape = image.shape
+  new_shape = min(shape[1], shape[2])
+  offset_y = max(shape[1] - shape[2], 0) // 2
+  offset_x = max(shape[2] - shape[1], 0) // 2
+  image = tf.image.crop_to_bounding_box(
+      image, offset_y, offset_x, new_shape, new_shape)
+  return image
+
 def loadImg():
     content_image_url = st.text_input('Content Image URL', 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Golden_Gate_Bridge_from_Battery_Spencer.jpg/640px-Golden_Gate_Bridge_from_Battery_Spencer.jpg')
     style_image_url = st.text_input('Style Image URL', 'https://upload.wikimedia.org/wikipedia/commons/0/0a/The_Great_Wave_off_Kanagawa.jpg')
