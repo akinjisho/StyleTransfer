@@ -6,7 +6,7 @@ import numpy as np
 import streamlit as st
 import requests
 import os
-from tensorflow.keras.preprocessing import image
+
 # Home UI 
 
 def main():
@@ -22,9 +22,19 @@ def main():
         """
 
     st.write(font_css, unsafe_allow_html=True)
-
-    
     stleTransfer()
+
+def load_image(image_url, image_size=(256, 256), preserve_aspect_ratio=True): #256 because if set less image was not very good in the output
+  """Loads and preprocesses images."""
+  # Cache image file locally.
+  image_path = tf.keras.utils.get_file(os.path.basename(image_url)[-128:], image_url)
+  # Load and convert to float32 numpy array, add batch dimension, and normalize to range [0, 1].
+  img = tf.io.decode_image(
+      tf.io.read_file(image_path),
+      channels=3, dtype=tf.float32)[tf.newaxis, ...]
+  img = crop_center(img)
+  img = tf.image.resize(img, image_size, preserve_aspect_ratio=True)
+  return img
 
 def loadImg():
     content_image_url = st.text_input('Content Image URL', 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Golden_Gate_Bridge_from_Battery_Spencer.jpg/640px-Golden_Gate_Bridge_from_Battery_Spencer.jpg')
@@ -37,8 +47,8 @@ def loadImg():
     # well but will lead to different results).
     style_img_size = (256, 256)  # Recommended to keep it at 256.
 
-    content_image = image.load_img(content_image_url, content_img_size)
-    style_image = image.load_img(style_image_url, style_img_size)
+    content_image = load_img(content_image_url, content_img_size)
+    style_image = load_img(style_image_url, style_img_size)
     
     style_image = tf.nn.avg_pool(style_image, ksize=[3,3], strides=[1,1], padding='SAME')
 
