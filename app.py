@@ -51,9 +51,27 @@ def crop_center(image):
       image, offset_y, offset_x, new_shape, new_shape)
   return image
 
+def uploadImage(key, new_height=480):
+
+    uploaded_file = st.file_uploader("Choose a Image file",key=key)
+    if uploaded_file is not None:
+        file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
+        img = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
+        img = cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
+        
+        # Pre-processing image: resize image
+        return preProcessImg(img, new_height)
+    
+    return cv2.cvtColor(preProcessImg(cv2.imread('sample.jpg'),new_height),cv2.COLOR_BGR2RGB)
+
+def preProcessImg(img, new_height=480):
+    # Pre-processing image: resize image
+    img = cv2.resize(img,(256,256))
+    return img
+
 def loadImg():
-    content_image_url = st.text_input('Content Image URL', 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Golden_Gate_Bridge_from_Battery_Spencer.jpg/640px-Golden_Gate_Bridge_from_Battery_Spencer.jpg')
-    style_image_url = st.text_input('Style Image URL', 'https://upload.wikimedia.org/wikipedia/commons/0/0a/The_Great_Wave_off_Kanagawa.jpg')
+    #content_image_url = st.text_input('Content Image URL', 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Golden_Gate_Bridge_from_Battery_Spencer.jpg/640px-Golden_Gate_Bridge_from_Battery_Spencer.jpg')
+    #style_image_url = st.text_input('Style Image URL', 'https://upload.wikimedia.org/wikipedia/commons/0/0a/The_Great_Wave_off_Kanagawa.jpg')
     output_image_size = 384
     # The content image size can be arbitrary.
     content_img_size = (output_image_size, output_image_size)
@@ -61,10 +79,12 @@ def loadImg():
     # recommended image size for the style image (though, other sizes work as 
     # well but will lead to different results).
     style_img_size = (256, 256)  # Recommended to keep it at 256.
-
-    content_image = load_image(content_image_url, content_img_size)
-    style_image = load_image(style_image_url, style_img_size)
     
+    #content_image = load_image(content_image_url, content_img_size)
+    #style_image = load_image(style_image_url, style_img_size)
+    
+    content_image = uploadImage("content_image")
+    style_image = uploadImage("style_image")
     style_image = tf.nn.avg_pool(style_image, ksize=[3,3], strides=[1,1], padding='SAME')
 
     return (content_image,style_image)
@@ -77,8 +97,8 @@ def stleTransfer():
 
     # Original Image
     st.subheader("Input Images")
-    #st.image(content_image)
-    #st.image(style_image)
+    st.image(content_image)
+    st.image(style_image)
     
     st.subheader("Cartoonized Image")
 
