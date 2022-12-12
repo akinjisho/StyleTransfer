@@ -85,7 +85,7 @@ def loadImg():
     
     content_image = uploadImage("content_image")
     style_image = uploadImage("style_image")
-    style_image = tf.nn.avg_pool(style_image, ksize=[3,3], strides=[1,1], padding='SAME')
+    #style_image = tf.nn.avg_pool(style_image, ksize=[3,3], strides=[1,1], padding='SAME')
 
     return (content_image,style_image)
 
