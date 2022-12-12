@@ -77,8 +77,8 @@ def stleTransfer():
 
     # Original Image
     st.subheader("Input Images")
-    st.image(content_image)
-    st.image(style_image)
+    #st.image(content_image)
+    #st.image(style_image)
     
     st.subheader("Cartoonized Image")
 
