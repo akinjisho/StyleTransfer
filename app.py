@@ -47,7 +47,7 @@ def uploadImage(key, new_height=480):
 
  # UI Options  
     if tabs == 'Annotate Image':
-        annotateImg()
+        cartoonization()
     if tabs == 'Resize Image':
         resizeImg()
 
